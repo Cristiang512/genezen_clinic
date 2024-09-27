@@ -2,11 +2,10 @@
 
 @section('content')
 <div class="d-flex" style="height: 100vh;">
-    
     <!-- Video institucional (40%) -->
     <div class="col-6" style="flex: 0 0 40%;">
         <video id="videoPlayer" autoplay muted style="width: 100%; height: 100%; object-fit: cover;">
-            <source src="{{ asset('videos/video1.mp4') }}" type="video/mp4">
+            <source id="videoSource" src="{{ asset('videos/video1.mp4') }}" type="video/mp4">
             Tu navegador no soporta videos HTML5.
         </video>
     </div>
@@ -34,7 +33,7 @@
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($paciente->fecha_cita)->format('Y-m-d') }}</td>
                             <td>{{ \Carbon\Carbon::parse($paciente->hora_cita)->format('g:i A') }}</td>
-                            <td>{{ $paciente->nombre }}</td>
+                            <td>{{ $paciente->nombre }} {{ $paciente->apellido }}</td>
                             <td>****{{ substr($paciente->identificacion, -4) }}</td>
                             <td class="font-weight-bold text-uppercase"><strong>{{ $paciente->area->nombre }}</strong></td>
                             <td class="estado-{{ Str::slug($paciente->estado->nombre) }} font-weight-bold text-uppercase"><strong>{{ $paciente->estado->nombre }}</strong></td>
