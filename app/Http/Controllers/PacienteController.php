@@ -130,10 +130,12 @@ class PacienteController extends Controller
 
     public function salaEspera()
     {
+        $fechaHoy = Carbon::today()->toDateString();
         // Obtener los pacientes que están activos o tienen cita programada
         $pacientes = Paciente::with('area', 'estado')
             ->where('estado_id', '!=', 9) // Aquí puedes filtrar por el estado que sea relevante
-            ->orderBy('fecha_cita', 'desc')
+            ->whereDate('fecha_cita', $fechaHoy)
+            ->orderBy('hora_cita', 'desc')
             ->get();
 
         return view('pacientes.salaEspera', compact('pacientes'));
