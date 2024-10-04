@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\EstadoController;
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,13 +33,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pacientes', PacienteController::class);
 });
 Route::resource('pacientes', PacienteController::class)->middleware('auth');
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::redirect('/register', '/login');
+Route::get('/registro-seguro-genezen', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/registro-seguro-genezen', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 // Rutas para áreas
 Route::resource('areas', AreaController::class)->middleware('auth');
-
 // Rutas para estados
 Route::resource('estados', EstadoController::class)->middleware('auth');
-
 Route::get('/sala-espera', [PacienteController::class, 'salaEspera'])->name('pacientes.salaEspera');
